@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta id="viewport" name="viewport" content="width=device-width, minimal-ui, initial-scale=1.0, maximum-scale=1.01, user-scalable=1">
+<title>Java - 讀網頁範例 @ Thinking in Robert :: 痞客邦 PIXNET ::</title>
+<link rel="stylesheet" href="//front.pixfs.net/css/mobile/styles/mobile-base.min.css?v=ab5f4e34418eaf1fcecad312e2e10ebd" type="text/css">
+<link rel="stylesheet" href="//front.pixfs.net/css/mobile/styles/blog.min.css?v=ab5f4e34418eaf1fcecad312e2e10ebd" type="text/css">
+<link rel="stylesheet" href="//front.pixfs.net/css/mobile/styles/stick.css?v=ab5f4e34418eaf1fcecad312e2e10ebd" type="text/css">
+<link rel="prev" href="http://robertvmp.pixnet.net/blog/post/26559009">
+<link rel="next" href="http://robertvmp.pixnet.net/blog/post/26657478">
+<link rel="stylesheet" href="//s.pixfs.net/blog/plugins/related/style.css?v=ab5f4e34418eaf1fcecad312e2e10ebd" type="text/css">
+<link rel="canonical" href="http://robertvmp.pixnet.net/blog/post/26585200">
+<meta name="author" content="羅伯特 (robertvmp)">
+<meta name="author-avatar-20" content="http://s5.pimg.tw/avatar/robertvmp/0/0/zoomcrop/20x20.png?v=1252643252">
+<meta name="keywords" content=",收藏嗜好,Java &amp; JavaScript,Java - 讀網頁範例">
+<meta name="description" content="為了搭配下載圖片的程式，當然就會有需要一支可以讀網頁的程式囉 Robert 在 JavaWorld 裡面爬文了很久，終於找出幾個不同的方法 其中以read1()那個方式最合適，檔案內容不會亂掉， 也不">
+<meta name="title" content="Thinking in Robert">
+<meta name="robots" content="INDEX,FOLLOW" />
+<script type="text/javascript">
+<!--
+var pix = pix || {};
+pix.panelsite = 'panel.pixnet.cc';
+pix.apisite = 'api.pixnet.cc';
+pix.login_name = '1a597e6882e6cbd73450fefee32bb27b';
+pix.visitor = "MGI1Yjc2MDllMWRmOWE5N2YwYzllYzdhMDEzNmNiMWY=";
+pix.openid = "MGI1Yjc2MDllMWRmOWE5N2YwYzllYzdhMDEzNmNiMWY=";
+pix.owner = 'robertvmp';
+pix.is_owner = false;
+pix.server_name = 'robertvmp.pixnet.net';
+pix.sToken = "20cd03495ff53d578a10462264d00282";
+pix.pixfssite = 's.pixfs.net';
+pix.falconsite = 'falcon.pixanalytics.com';
+pix.checklogin_version = 2;
+// timezone: null;
+//-->
+</script>
+<script src="//api.pixnet.cc/api/checklogin.php?js=1&amp;unique=3996641190&amp;timestamp=1440612958&amp;type=799" type="text/javascript"></script>
+<script src="//s.pixfs.net/js/pixnet/checklogin.min.js?v=ab5f4e34418eaf1fcecad312e2e10ebd" type="text/javascript"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="//libs.pixfs.net/jquery-plugins/cookie/1.0/jquery.cookie.js"></script>
+<script type="text/javascript" src="//s.pixfs.net/js/lang/zh_TW.js?v=ab5f4e34418eaf1fcecad312e2e10ebd"></script>
+<script src="//libs.pixfs.net/json2/json2.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="http://i18n.pixfs.net/zh_TW.js"></script>
+<script type="text/javascript" src="//s.pixfs.net/js/pix.min.js?v=ab5f4e34418eaf1fcecad312e2e10ebd"></script>
+<script src="//libs.pixfs.net/jquery.collapse/jquery.collapse.js" type="text/javascript"></script>
+<script src="//libs.pixfs.net/snap/snap.min.js" type="text/javascript"></script>
+<script src="//front.pixfs.net/js/mobile-main.min.js?v=ab5f4e34418eaf1fcecad312e2e10ebd"></script>
+<script src="//front.pixfs.net/js/jquery-scroll-startstop.min.js?v=ab5f4e34418eaf1fcecad312e2e10ebd"></script>
+<script src="//libs.pixfs.net/jquery.appear/0.3.3/jquery.appear.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+    jQuery.noConflict();
+var pix = pix || {};
+pix.js_error_type = 'mobile';
+dataLayer = [];
+//-->
+</script>
+<script src="//libs.pixfs.net/jquery.templates/beta1/jquery.tmpl.min.js" type="text/javascript"></script>
+<script src="//front.pixfs.net/js/all.min.js?v=ab5f4e34418eaf1fcecad312e2e10ebd" type="text/javascript"></script>
+<script src="//front.pixfs.net/js/blog.min.js?v=ab5f4e34418eaf1fcecad312e2e10ebd" type="text/javascript"></script>
+<script src="//front.pixfs.net/js/common/fix_object_id.min.js?v=ab5f4e34418eaf1fcecad312e2e10ebd" type="text/javascript"></script>
+<script src="//front.pixfs.net/js/stick.js?v=ab5f4e34418eaf1fcecad312e2e10ebd" type="text/javascript"></script>
+<script src="http://cdn51.vizury.com/pam/api/pam.js?name=PAM_TW_MWeb_Pixnt&id=7041&v=1.2&geo=ap"></script>
+  <link rel="stylesheet" href="//front.pixfs.net/css/mobile/styles/pop-ad.min.css?v=ab5f4e34418eaf1fcecad312e2e10ebd"/>
+  <script src="//front.pixfs.net/js/mobile-ad.min.js?v=ab5f4e34418eaf1fcecad312e2e10ebd"></script>
+</head>
+<body class=""     data-blog-site-category-id="28"
+    data-dfp-slot-id=""
+    data-mobile-mode="yep"
+    data-article-id="26585200"
+>
+<script type="text/javascript">
+_atrk_opts = { atrk_acct:"H00Mh1aIE700wg", domain:"pixnet.net",dynamic: true};
+(function() { var as = document.createElement('script'); as.type = 'text/javascript'; as.async = true; as.src = "https://d31qbv1cthcecs.cloudfront.net/atrk.js"; var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(as, s); })();
+</script>
+<noscript><img src="https://d5nxst8fruw4z.cloudfront.net/atrk.gif?account=H00Mh1aIE700wg" style="display:none" height="1" width="1" alt="" /></noscript>
+
+<div class="snap-drawers">
+    <div class="snap-drawer snap-drawer-right">
+        <div id="header-menu" style="">
+            <div id="side-menu">
+                <div id="side-menu-blog">
+                    <h2 class="blog-name">Thinking in Robert</h2>
+                    <a id="mixpanel-menu-blog-title" class="menu-title" href="http://robertvmp.pixnet.net/blog">部落格</a>
+                    <div class="menu-opitions menu-opitions-control" >
+                        <h2 class="opition-panel-inner" id="mixpanel-menu-blog-category">文章分類</h2>
+                        <ul class="opition-items-group">
+                            <li>
+                            <a class="opition-items" href="#" onclick="jQuery('#blog-category-1334030').toggle();return false;">其他興趣 (3)</a>
+                            <ul style="display:none;" id="blog-category-1334030">
+                                                                <li><a href="http://robertvmp.pixnet.net/blog/category/1340768">水草之森</a></li>
+                                                                <li><a href="http://robertvmp.pixnet.net/blog/category/1340770">珍珠派特</a></li>
+                                                                <li><a href="http://robertvmp.pixnet.net/blog/category/1340767">琴動我心</a></li>
+                                                            </ul>
+                            <li>
+                            <a class="opition-items" href="#" onclick="jQuery('#blog-category-1328564').toggle();return false;">不公開 (0)</a>
+                            <ul style="display:none;" id="blog-category-1328564">
+                                                            </ul>
+<li><a class="opition-items" href="http://robertvmp.pixnet.net/blog/category/1408458">Tools</a></li>
+<li><a class="opition-items" href="http://robertvmp.pixnet.net/blog/category/1408457">Java &amp; JavaScript</a></li>
+<li><a class="opition-items" href="http://robertvmp.pixnet.net/blog/category/1408456">Office English</a></li>
+<li><a class="opition-items" href="http://robertvmp.pixnet.net/blog/category/1340771">MIS大小事</a></li>
+<li><a class="opition-items" href="http://robertvmp.pixnet.net/blog/category/1362605">Oracle &amp; Unix</a></li>
+<li><a class="opition-items" href="http://robertvmp.pixnet.net/blog/category/1408403">邊遊邊記</a></li>
+<li><a class="opition-items" href="http://robertvmp.pixnet.net/blog/category/1360351">小棒特區</a></li>
+<li><a class="opition-items" href="http://robertvmp.pixnet.net/blog/category/1340761">其他</a></li>
+<li><a class="opition-items" href="http://robertvmp.pixnet.net/blog/category/1340763">帛琉圓夢全記錄</a></li>
+                        </ul>
+                        <h2 class="opition-panel-inner" id="mixpanel-menu-blog-new">最新文章</h2>
+                        <ul class="opition-items-group">
+                                                        <li>
+                            <a class="opition-items" href="http://robertvmp.pixnet.net/blog/post/30474788">點選 &quot;我的文件&quot; 圖示, 卻無法開啟其資料夾 - 解決方法 (超過3個月以上)</a>
+                            </li>
+                                                        <li>
+                            <a class="opition-items" href="http://robertvmp.pixnet.net/blog/post/29245611">WinXP - 刪除檔案時, 檔案總管(explorer.exe)沒有回應  (超過3個月以上)</a>
+                            </li>
+                                                        <li>
+                            <a class="opition-items" href="http://robertvmp.pixnet.net/blog/post/29149727">Excel VBA 連線 Oracle - Select 與 Insert 範例 (超過3個月以上)</a>
+                            </li>
+                                                        <li>
+                            <a class="opition-items" href="http://robertvmp.pixnet.net/blog/post/28165337">Oracle - 基本的Sql編寫注意事項  (超過3個月以上)</a>
+                            </li>
+                                                        <li>
+                            <a class="opition-items" href="http://robertvmp.pixnet.net/blog/post/28073989">靈格斯 Lingoes 去彈窗廣告方法 (超過3個月以上)</a>
+                            </li>
+                                                        <li>
+                            <a class="opition-items" href="http://robertvmp.pixnet.net/blog/post/27954234">2010 聖誕節的交換禮物(封箱文) (超過3個月以上)</a>
+                            </li>
+                                                        <li>
+                            <a class="opition-items" href="http://robertvmp.pixnet.net/blog/post/27894196">Oracle - Merge into 的使用實例 (超過3個月以上)</a>
+                            </li>
+                                                        <li>
+                            <a class="opition-items" href="http://robertvmp.pixnet.net/blog/post/27885141">2010/11/23~27 @ 南京 (超過3個月以上)</a>
+                            </li>
+                                                        <li>
+                            <a class="opition-items" href="http://robertvmp.pixnet.net/blog/post/27825975">2010/12/03~04 @ 內灣-武林帖 (超過3個月以上)</a>
+                            </li>
+                                                        <li>
+                            <a class="opition-items" href="http://robertvmp.pixnet.net/blog/post/27824401">第一本家庭聯絡簿   (超過3個月以上)</a>
+                            </li>
+                                                        <li>
+                            <a class="opition-items" href="http://robertvmp.pixnet.net/blog/post/27744301">Windows Live Communications Platform 發生問題 - 解決方法 (超過3個月以上)</a>
+                            </li>
+                                                        <li>
+                            <a class="opition-items" href="http://robertvmp.pixnet.net/blog/post/27743377">Windows Live Messenger 發生錯誤, 必須關閉 - 解決方法 (超過3個月以上)</a>
+                            </li>
+                                                        <li>
+                            <a class="opition-items" href="http://robertvmp.pixnet.net/blog/post/27741055">WinXP Home版 - 新增群組原則 (超過3個月以上)</a>
+                            </li>
+                                                        <li>
+                            <a class="opition-items" href="http://robertvmp.pixnet.net/blog/post/27677027">MS Office -  簡繁字體轉換的好工具 - 簡繁轉換增益集 (超過3個月以上)</a>
+                            </li>
+                                                        <li>
+                            <a class="opition-items" href="http://robertvmp.pixnet.net/blog/post/27415576">PowerPoint - 講義 - 多頁列印並放到最大 (超過3個月以上)</a>
+                            </li>
+                                                    </ul>
+                        <h2 class="opition-panel-inner" id="mixpanel-menu-blog-hot">熱門文章</h2>
+                        <ul class="opition-items-group">
+                                                                                    <li>
+                            <a class="opition-items" href="http://robertvmp.pixnet.net/blog/post/24558409">英文職稱 (186346)</a>
+                            </li>
+                                                                                    <li>
+                            <a class="opition-items" href="http://robertvmp.pixnet.net/blog/post/22233545">Excel 的暫存檔位置 (54734)</a>
+                            </li>
+                                                                                    <li>
+                            <a class="opition-items" href="http://robertvmp.pixnet.net/blog/post/26067443">Word 靈異事件 - Word無法啟動轉換器 mswrd632.wpc (44066)</a>
+                            </li>
+                                                                                    <li>
+                            <a class="opition-items" href="http://robertvmp.pixnet.net/blog/post/25710027">靈異的老問題-XP開機很慢 (32139)</a>
+                            </li>
+                                                                                    <li>
+                            <a class="opition-items" href="http://robertvmp.pixnet.net/blog/post/24972835">假設語氣 的用法 (28934)</a>
+                            </li>
+                                                                                    <li>
+                            <a class="opition-items" href="http://robertvmp.pixnet.net/blog/post/24544521">JavaScript - 入門觀念基礎教學 (25615)</a>
+                            </li>
+                                                                                    <li>
+                            <a class="opition-items" href="http://robertvmp.pixnet.net/blog/post/25283028">透過修復主控台, 嘗試修復 Windows無法開機 (24487)</a>
+                            </li>
+                                                                                    <li>
+                            <a class="opition-items" href="http://robertvmp.pixnet.net/blog/post/27415576">PowerPoint - 講義 - 多頁列印並放到最大 (24472)</a>
+                            </li>
+                                                                                    <li>
+                            <a class="opition-items" href="http://robertvmp.pixnet.net/blog/post/23229110">JAVA - Excel 開檔讀檔 - JXL 篇 (20504)</a>
+                            </li>
+                                                                                    <li>
+                            <a class="opition-items" href="http://robertvmp.pixnet.net/blog/post/26552788">《轉貼教學》如何播放 HDTV，TS檔 (19335)</a>
+                            </li>
+                                                                                    <li>
+                            <a class="opition-items" href="http://robertvmp.pixnet.net/blog/post/26974351">新增 Microsoft Office Document Image Writer 虛擬印表機 (17627)</a>
+                            </li>
+                                                                                    <li>
+                            <a class="opition-items" href="http://robertvmp.pixnet.net/blog/post/22361197">ASUS 筆電安裝流程 (17014)</a>
+                            </li>
+                                                                                    <li>
+                            <a class="opition-items" href="http://robertvmp.pixnet.net/blog/post/26585200">Java - 讀網頁範例  (15276)</a>
+                            </li>
+                                                                                    <li>
+                            <a class="opition-items" href="http://robertvmp.pixnet.net/blog/post/23495124">Oracle常用傻瓜問題1000問 [9I ADMIN] (15123)</a>
+                            </li>
+                                                                                    <li>
+                            <a class="opition-items" href="http://robertvmp.pixnet.net/blog/post/26422026">微軟注音2010輸入法 - 沒有選字窗的解決法 (15023)</a>
+                            </li>
+                                                    </ul>
+                    </div>
+                </div>
+                <div id="side-menu-photo">
+                    <a id="mixpanel-menu-photo-title" class="menu-title" href="/album">相簿</a>
+                </div>
+                <div id="side-menu-login">
+                    <a id="mixpanel-menu-login" class="menu-title" href="//login.pixnet.cc/?theme=mobile&amp;done=http%3A%2F%2Frobertvmp.pixnet.net%2Fblog%2Fpost%2F26585200-java---%25E8%25AE%2580%25E7%25B6%25B2%25E9%25A0%2581%25E7%25AF%2584%25E4%25BE%258B-">登入</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div id="main-content">
+<div id="header">
+	<div class="header-bar">
+            <a href="javascript:void(0)" title="痞客邦首頁" class="header-logo ui-link" id="mixpanel-header-logo"><img src="//front.pixfs.net/css/mobile/styles/images/pixnet-logo.png" class="header-logo-img"> <span class="header-logo-arrow"></span></a>
+            <a href="javascript:void(0);" class="right-nav-button" id="mixpanel-header-list"><span><img src="//s.pixfs.net/mobile/images/icons/list.png"></span></a>
+                        <h1 id="mixpanel-header-home"><a href="http://robertvmp.pixnet.net">羅伯特</a></h1>
+            	</div>
+	<ul class="header-tabs">
+		<li class="active"><a href="/blog" id="mixpanel-tab-blog">部落格</a></li>
+		<li><a href="/album" id="mixpanel-tab-album">相簿</a></li>
+	</ul>
+        	<meta itemprop="name" content="Java - 讀網頁範例 @ Thinking in Robert :: 痞客邦 PIXNET ::">
+<meta itemprop="description" content="為了搭配下載圖片的程式，當然就會有需要一支可以讀網頁的程式囉 Robert 在 JavaWorld 裡面爬文了很久，終於找出幾個不同的方法 其中以read1()那個方式最合適，檔案內容不會亂掉， 也不">
+
+<script type="text/javascript">
+<!--
+var pix = pix || {};
+pix.js_error_type = pix.js_error_type || 'frontblog';
+//-->
+</script>
+<script type="text/javascript" src="//s.pixfs.net/js/pixlogger.min.js?v=ab5f4e34418eaf1fcecad312e2e10ebd"></script>
+<script type="text/javascript">
+<!--
+(function(){
+    if (window.size().height > 10 && window.size().width > 10) {
+        var i = new Image(1,1);
+        i.src = '//counter.pixplug.in/count.php?timestamp=1440612958&random=1950012216&check=2793540412&data[blog]=%7B%22blogid%22%3A%22289165%22%7D&data[blogarticle]=%7B%22blogid%22%3A%22289165%22%2C%22articleid%22%3A%2226585200%22%7D&height=' + window.size().height + '&width=' + window.size().width + '&referer=' + encodeURI(document.referrer);
+        i.onload = function() { return; }
+    }
+})();
+//-->
+</script>
+<!-- Head Modified: 1440612958 -->
+<!-- async script -->
+<script type="text/javascript">
+<!--
+jQuery(document).ready(function () {
+    jQuery.ajaxSetup({ cache: true });
+    jQuery.getScript("//js.pixplug.in/addon/11/production.js?v=1440553722", function(data, textStatus) { jQuery.ajaxSetup({cache: true});jQuery.pixAddonRelatedArticle({"blog_relatedarticleshow":"post","blog_relatedarticle":"site","blog_relatedtemplate":"system","addon_username":"robertvmp","addon_expired_at":0,"addon_ismobile":true,"ab_testing_seed":4142321448});jQuery.ajaxSetup({cache: false}); });
+    jQuery.ajaxSetup({ cache: false });
+});
+//-->
+</script>
+
+<!-- load sync script -->
+
+<!-- execute sync addon -->
+<script type="text/javascript">
+<!--
+var pix = pix || {};
+pix.visitor_url = "http://robertvmp.pixnet.net/blog";
+pix.visitor_timestamp = "1440612958";
+pix.visitor_nonce = "189467104";
+pix.visitor_public = "LumrRMVHhADdttHSeUhMM8S3";
+pix.visitor_sig = "2e32d9184591f319895d31c2b81b512f";
+pix.user_name = null;
+pix.avatar_version = 0;
+(function() {
+    var js = document.createElement('script');
+    js.src = "\/\/s.pixfs.net\/visitor.pixplug.in\/checklogin.min.js?v=ab5f4e34418eaf1fcecad312e2e10ebd";
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(js, s);
+})();
+//-->
+</script>
+        </div>
+<div id="main" class="articles">
+<div class="article-header">
+    <h3 class="header-title" id="article-26585200" data-hot-link="//www.pixnet.net/blog/articles/category/0" data-site-category="收藏嗜好" data-site-category-id="20">Java - 讀網頁範例 </h3>
+    <div class="article-info cf">
+        <span class="header-date">Jul 13 2010 10:48</span>
+        <span class="comment-show">13</span>
+        <span class="favorite-show">15276</span>
+    </div>
+
+    
+    <div class="article-share cf">
+        <div class="fb-like">
+            <iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Frobertvmp.pixnet.net%2Fblog%2Fpost%2F26585200&amp;layout=button_count&amp;show_faces=false&amp;width=315&amp;action=like&amp;colorscheme=light&amp;height=30" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:315px; height:30px;" allowTransparency="true"></iframe>
+        </div>
+        <div class="zoom">
+            <a href="javascript:;" class="zoom-in" id="mixpanel-zoom-in"><span>&nbsp;</span></a>
+            <a href="javascript:;" class="zoom-out" id="mixpanel-zoom-out"><span>&nbsp;</span></a>
+        </div>
+    </div>
+</div>
+<div class="header-ad" id="pixad1101">
+    </div>
+<div class="article-body">
+            <div class="article-content-inner">
+        <p>&nbsp;</p>
+<p>為了搭配下載圖片的程式，當然就會有需要一支可以讀網頁的程式囉</p>
+<p>Robert 在 JavaWorld 裡面爬文了很久，終於找出幾個不同的方法</p>
+<p>其中以read1()那個方式最合適，檔案內容不會亂掉，</p>
+<p>也不用管網頁編碼，好處多多...</p>
+<p>目前個人初淺的看法是因為用 [ 位元串流] 的方式讀出/寫入</p>
+<p>所以效果比較好，後續繼續觀察看看....</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<hr />
+<p>&nbsp;</p>
+<p><br />import java.net.*;<br />import java.io.*;<br />&nbsp;<br />public class ReadWebPage {<br />&nbsp;&nbsp; &nbsp;<br />&nbsp;&nbsp; &nbsp;public static void main(String[] arg) throws Exception {<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;String web1 = "http://tw.news.yahoo.com/article/url/d/a/100712/8/293ny.html" ;//UTF-8 <br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;String web2 = "http://bin.ton.net/books_detail.asp?id_book=205"; //Big5<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;String web3 = "http://zh.wikipedia.org/w/index.php?title=%E9%A6%96%E9%A1%B5&amp;variant=zh-tw";<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;read1(web1);<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;read2(web1);<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;read3(web1);&nbsp;&nbsp; &nbsp;<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;<br />&nbsp;&nbsp; &nbsp;}<br />&nbsp;&nbsp; &nbsp;<br />&nbsp;&nbsp; &nbsp;//以這個方法取出來的檔案內容格式，最合適，不會亂掉，也不用管網頁編碼<br />&nbsp;&nbsp; &nbsp;public static void read1( String strURL ) {<br />&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;int chunksize = 4096;<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; byte[] chunk = new byte[chunksize];<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; int count;<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; try&nbsp; {&nbsp;&nbsp; &nbsp;<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;URL pageUrl = new URL(strURL );<br />&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 讀入網頁(位元串流)<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #ff6600;">&nbsp; BufferedInputStream bis = new BufferedInputStream(pageUrl.openStream());<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("URL1.txt", false));<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.out.println("read1() running " );<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; while ((count = bis.read(chunk, 0, chunksize)) != -1) {<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;bos.write(chunk, 0, count); // 寫入檔案<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span><br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bos.close();<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bis.close();&nbsp;&nbsp;&nbsp; &nbsp;<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.out.println("Done");&nbsp; &nbsp;<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }catch (IOException e) {<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;e.printStackTrace();<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp; &nbsp;&nbsp; }<br />&nbsp;&nbsp; &nbsp;<br />&nbsp;&nbsp; &nbsp;<br />&nbsp;&nbsp; &nbsp; <br />&nbsp;&nbsp; &nbsp;//*******************************************************************************************<br />&nbsp;&nbsp; &nbsp;///以這個方法取出來的檔案內容格式，變成一行，不易閱讀，需注意網頁編碼<br />&nbsp;&nbsp; &nbsp;public static void read2( String strURL ) {<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;System.out.println("read2() running");<br /><br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;try {<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;URL url_address = new URL( strURL );<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #ff6600;">&nbsp;// 讀入網頁(字元串流)&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;BufferedReader br = new BufferedReader(new InputStreamReader(url_address.openStream(), "UTF-8"));<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;//BufferedReader br = new BufferedReader(new InputStreamReader(url_address.openStream(), "Big5"));<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;BufferedWriter bw = new BufferedWriter(new FileWriter("URL2.txt", false));&nbsp;&nbsp; &nbsp;<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;String oneLine = null ;<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;while ((oneLine = br.readLine()) != null) {<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;bw.write(oneLine);&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;}<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;bw.close();<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;br.close();</span><br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;} catch (UnsupportedEncodingException e) {<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;e.printStackTrace();<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;} catch (IOException e) {<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;e.printStackTrace();<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;}<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;System.out.println("Done");<br />&nbsp;&nbsp; &nbsp;}<br />&nbsp;&nbsp; &nbsp;<br />&nbsp;&nbsp; &nbsp;<br />&nbsp;&nbsp; &nbsp;//*******************************************************************************************<br />&nbsp;&nbsp; &nbsp;//以這個方法取出來的檔案內容格式，變成一行，不易閱讀，需注意網頁編碼<br />&nbsp;&nbsp; &nbsp;public static void read3( String strURL ) {<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;System.out.println("read3() running");<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;try {<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;String line = null;<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;<span style="color: #ff6600;"> &nbsp;//另一種連接網頁的方式<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;URL url = new URL(strURL);<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;HttpURLConnection uc = (HttpURLConnection) url.openConnection();<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;uc.connect();<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;InputStream is = uc.getInputStream();</span><br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;/// 讀入網頁(字元串流)<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8")); <br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;//BufferedReader br = new BufferedReader(new InputStreamReader(url_address.openStream(), "Big5"));<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;BufferedWriter bw = new BufferedWriter(new FileWriter("URL3.txt", false));&nbsp;&nbsp; &nbsp;<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;while ((line = br.readLine()) != null) {<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;bw.write(line);&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;}<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;br.close();<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;bw.close();<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;}<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;catch(Exception e) {<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;System.out.println("發生了" + e + "例外");<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;}<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;System.out.println("Done");<br />&nbsp;&nbsp; &nbsp;}<br />&nbsp; &nbsp;<br />&nbsp;&nbsp; &nbsp;/* 以下這是前輩的說明，由於還沒有機會用，所以先放在這裡留念一下</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; 若是讀取靜態的檔案, 且要知道該檔案之內定字元編碼, 唯一的方法就是<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;以 ByteArrayInputStream 去讀該檔案, 並且辨別該檔案檔頭之位元組為何<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;辨別檔案的方法, 先讀完全部檔案, 再區別<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;utf-8 前三bytes 分別為 -17,-65,-69 ----&gt; offset=3<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;utf-16le 前二bytes 分別為 -1,-2 ----&gt; offset=2<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;utf-16be 前二bytes 分別為 -2,-1 ----&gt; offset=2<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;MS950, BIG5, .... 無 ----&gt; offset=0;<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;讀完後再呼叫 new String(全部bytes,offset,全部bytes長度,"編碼方式")<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;轉成字串 <br />*/<br />}</p>
+                </div>
+                <div id="ad-300x50" style="padding: 3px 0px 0px 0px;"></div>
+    </div>
+
+
+        
+<div class="quick-navs">
+    <a href="http://robertvmp.pixnet.net/blog/post/26559009" class="prev ui-link" id="mixpanel-stick-prev">
+        <p class="link-text">
+        上一篇：自訂 IE 的 [檢視原始碼] 所開啟的程式    </p></a>
+    <a href="http://robertvmp.pixnet.net/blog/post/26657478" class="next ui-link" id="mixpanel-stick-next">
+        <p class="link-text">
+        下一篇：Java - 自製網頁圖片下載器    </p></a>
+</div>
+
+        
+<div class="article-footer article-ad">
+
+    
+</div>
+
+
+
+<div id='comment_form'>
+</div>
+<div class="article-comments">
+        <div style="text-align:center;" id="pixad1138"></div>
+        <h4><span>13 則留言</span></h4>
+    <ul class="comments-list" id="comments-list">
+		    	<li id="comment-31447519"> 
+		    <div class="comment-header"> 
+		<span class="comment-date">May 23 2011 01:58</span> 
+		    學java的路人	    </div> 
+	    <a href="#" target="_blank" class="comment-avatar" rel="nofollow"><img src="//s.pixfs.net/blog/images/choc/avatar-neutral.png" alt="學java的路人" height="50" width="50"></a>	    <div class="comment-body"> 
+	                		大大這篇文真棒! 我正好有用到~<br />
+目前小弟在撰寫一個抓取網頁原始碼的程式,<br />
+恰好就是用到這篇文的第一種方法~<br />
+<br />
+但是有一點很苦惱,<br />
+那就是抓下來-&gt;存成xxx.html(到這邊都是正常的)<br />
+可是我把這xxx.html用瀏覽器打開就會變成亂碼...<br />
+不過將字元編碼改成Big5就會正常(原本是UTF-8)<br />
+不知道有沒有辦法可以解決...<br />
+(例如都強制儲存成UTF-8格式之類的!?)	    </div> 
+	    		</li> 
+		    	<li id="comment-31457709"> 
+		    <div class="comment-header"> 
+		<span class="comment-date">May 26 2011 01:42</span> 
+		    學java的路人	    </div> 
+	    <a href="#" target="_blank" class="comment-avatar" rel="nofollow"><img src="//s.pixfs.net/blog/images/choc/avatar-neutral.png" alt="學java的路人" height="50" width="50"></a>	    <div class="comment-body"> 
+	                		您好~上次我可能眼殘了一下, 沒注意到下面的留念部分...<br />
+可以請問一下,下面那個判斷該怎麼做呢~<br />
+不是很能夠理解byte分別為-17  -65  -69---&gt;offset=3這種意思呢...<br />
+<br />
+小弟是有想到一個做法, 就是在程式碼中加入判斷機制, <br />
+搜尋網頁原始碼有無提到是BIG5或是UTF-8等字眼, <br />
+例如<br />
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=big5&quot;/&gt;<br />
+<br />
+當中的BIG5發現之後, 變在寫入/讀出的部分加入BIG5!<br />
+可是有些網站並不會有這種東西, 就變得可能會出現bug...<br />
+所以想了解一下您最後所說的那個做法!	    </div> 
+	    		</li> 
+		    	<li id="comment-31458015"> 
+		    <div class="comment-header"> 
+		<span class="comment-date">May 26 2011 09:49</span> 
+		    <img src="//front.pixfs.net/comment/images/openid-pixnet-icon.gif" class="identity-provider comment-icon"><a href="http://robertvmp.pixnet.net/blog" target="_blank" rel="nofollow">羅伯特</a>	    </div> 
+	    <a href="http://robertvmp.pixnet.net/blog" target="_blank" class="comment-avatar" rel="nofollow"><img src="http://s5.pimg.tw/avatar/robertvmp/0/0/zoomcrop/90x90.png?v=1252643252" alt="羅伯特" height="50" width="50"></a>	    <div class="comment-body"> 
+	                		您好<br />
+其實最下面的文字說明部分，是我在 Java World 上面找到的訊息...<br />
+但是小弟學淺，也不知道該如何運用，<br />
+所以一直都懸在那邊，沒機會進一步測試哩..<br />
+或許您可以移駕 Java World 上面去看看，一定會有人為您解惑的...<br />
+到時再請您不吝與我分享囉<br />
+	    </div> 
+	    		</li> 
+		    	<li id="comment-31599763"> 
+		    <div class="comment-header"> 
+		<span class="comment-date">Jun 12 2011 16:37</span> 
+		    學java的路人	    </div> 
+	    <a href="#" target="_blank" class="comment-avatar" rel="nofollow"><img src="//s.pixfs.net/blog/images/choc/avatar-neutral.png" alt="學java的路人" height="50" width="50"></a>	    <div class="comment-body"> 
+	                		您好~經過幾週的查找, 我目前找到了一種較穩定的方法! 原始碼奉上~<br />
+import java.net.URL;<br />
+import java.net.URLConnection;<br />
+import java.io.IOException;<br />
+import java.util.Date;<br />
+try{<br />
+    //字碼確定<br />
+    URL url=new URL (httpUrl);<br />
+    c = url.openConnection();<br />
+    c.connect();<br />
+    String encod = c.getContentType().substring(c.getContentType().lastIndexOf(&quot;=&quot;));<br />
+    unicode = encod.substring(1,encod.length());<br />
+}<br />
+這樣就能事先查詢此網頁的編碼是用什麼! 只要讓寫入和讀出的部分先用這段程式碼轉換過, 再回傳適當的編碼,EX: UTF-8或BIG5~~ <br />
+這樣寫入讀出就會比較穩定~ 也算是解決掉網頁編碼的問題!<br />
+不過目前只有實測過BIG5和UTF-8是成功的~<br />
+可能還要改善! 	    </div> 
+	    		</li> 
+		    	<li id="comment-31599789"> 
+		    <div class="comment-header"> 
+		<span class="comment-date">Jun 12 2011 16:41</span> 
+		    學java的路人	    </div> 
+	    <a href="#" target="_blank" class="comment-avatar" rel="nofollow"><img src="//s.pixfs.net/blog/images/choc/avatar-neutral.png" alt="學java的路人" height="50" width="50"></a>	    <div class="comment-body"> 
+	                		補充~<br />
+.getContentType&lt;--這次的功臣是這個東西~<br />
+他能夠找到網頁內的資訊:<br />
+這一列--&gt; text/html; charset=utf-8 (此為yahoo首頁的測試結果)	    </div> 
+	    		</li> 
+		    	<li id="comment-31602121"> 
+		    <div class="comment-header"> 
+		<span class="comment-date">Jun 13 2011 12:47</span> 
+		    <img src="//front.pixfs.net/comment/images/openid-pixnet-icon.gif" class="identity-provider comment-icon"><a href="http://robertvmp.pixnet.net/blog" target="_blank" rel="nofollow">羅伯特</a>	    </div> 
+	    <a href="http://robertvmp.pixnet.net/blog" target="_blank" class="comment-avatar" rel="nofollow"><img src="http://s5.pimg.tw/avatar/robertvmp/0/0/zoomcrop/90x90.png?v=1252643252" alt="羅伯特" height="50" width="50"></a>	    <div class="comment-body"> 
+	                		謝謝您的回覆<br />
+您真是太有心啦<br />
+最近太忙，有空再來測測看<br />
+謝謝	    </div> 
+	    		</li> 
+		    	<li id="comment-31969466"> 
+		    <div class="comment-header"> 
+		<span class="comment-date">Aug 24 2011 22:05</span> 
+		    感謝您的第一個方法	    </div> 
+	    <a href="#" target="_blank" class="comment-avatar" rel="nofollow"><img src="//s.pixfs.net/blog/images/choc/avatar-neutral.png" alt="感謝您的第一個方法" height="50" width="50"></a>	    <div class="comment-body"> 
+	                		我原本一直下載不到PHP網頁中的圖片<br />
+現在都解決了<br />
+真的很感謝您= ˇ =	    </div> 
+	    		</li> 
+		    	<li id="comment-33658430"> 
+		    <div class="comment-header"> 
+		<span class="comment-date">Mar 09 2012 10:38</span> 
+		    qiying	    </div> 
+	    <a href="#" target="_blank" class="comment-avatar" rel="nofollow"><img src="//s.pixfs.net/blog/images/choc/avatar-neutral.png" alt="qiying" height="50" width="50"></a>	    <div class="comment-body"> 
+	                		感謝你!這個網頁實在太棒了!<br />
+以往找一些功能都要在google上搜尋拼湊很久，您讓我輕鬆解決了這個問題!	    </div> 
+	    		</li> 
+		    	<li id="comment-57485782"> 
+		    <div class="comment-header"> 
+		<span class="comment-date">Dec 04 2013 12:19</span> 
+		    Nick	    </div> 
+	    <a href="#" target="_blank" class="comment-avatar" rel="nofollow"><img src="//s.pixfs.net/blog/images/choc/avatar-neutral.png" alt="Nick" height="50" width="50"></a>	    <div class="comment-body"> 
+	                		感謝你!這個實在太棒了!您讓我輕鬆解決了這個問題!	    </div> 
+	    		</li> 
+		    	<li id="comment-59781133"> 
+		    <div class="comment-header"> 
+		<span class="comment-date">Jun 14 2014 23:02</span> 
+		    <img src="//front.pixfs.net/comment/images/openid-pixnet-icon.gif" class="identity-provider comment-icon"><a href="http://robertvmp.pixnet.net/blog" target="_blank" rel="nofollow">羅伯特</a>	    </div> 
+	    <a href="http://robertvmp.pixnet.net/blog" target="_blank" class="comment-avatar" rel="nofollow"><img src="http://s5.pimg.tw/avatar/robertvmp/0/0/zoomcrop/90x90.png?v=1252643252" alt="羅伯特" height="50" width="50"></a>	    <div class="comment-body"> 
+	                		哈, 今天突然發現自己當年寫過的一些東西, 竟然可以幫助到其他人, 這感覺真的很棒呀~~	    </div> 
+	    		</li> 
+	    </ul>
+    <a href="#" class="more-comments" id="more-comments">顯示更多留言</a>
+    <div class="comment-toolbar">
+	<span>13 則留言</span>
+        <a class="comment-r" href="#comment-box"><img src="//s.pixfs.net/mobile/images/icons/comment_add_B.png"></a>
+    </div>
+</div>
+<script type="text/javascript">
+<!--
+jQuery(function() {
+    var $ = jQuery;
+    var total_comments = 13;
+
+    //#40294 用ajax接postcommentAction產生的comment form
+    var action = location.href;
+    action = action.replace('post', 'postcomment');
+    $.ajax({
+        type:     'GET',
+        url:      action,
+        data:     {"getForm": 1, "isMobile": 1},
+        dataType: 'json',
+        success:  function(data)
+                  {
+                      $('#comment_form').html(data.form);
+                  },
+        error:    function(error)
+                  {
+                      console.log(error);
+                  }
+    });
+
+    function getId(e)
+    {
+	return $(e).attr('id').split('-')[2];
+    }
+
+    function checkLength()
+    {
+	var length = $('#comments-list').find('li').length;
+	if (length >= total_comments) {
+	    $('#more-comments').hide();
+	}
+    }
+
+    checkLength();
+
+    $('.button-reply').click(function() {
+	var id = getId(this);
+	$(this).parent().toggle();
+	$('#reply-form-' + id).toggle();
+    });
+
+    $('.button-cancel').click(function() {
+	var id = getId(this);
+	$(this).parent().toggle();
+	$('#comment-functions-' + id).toggle();
+    });
+
+    $('.button-delete').click(function() {
+	var id = getId(this);
+	pix.delComment(id);
+    });
+
+    $('.button-submit').click(function() {
+	var id = getId(this);
+	var content = $('#reply-content-' + id).val();
+	pix.replyComment(id, content, function() {
+	    $('#comment-reply-' + id).html('Reply: ' + pix.htmlspecialchars(content));
+	});
+    });
+
+    $('.article-comments').delegate("#more-comments", 'click', function() {
+	var id = $('#comments-list').find('li:last').attr('id').split('-')[1];
+
+	$.get('/blog/post/26585200/comments', { "after": id }, function(data) {
+	    $('#comments-list').append(data);
+	    checkLength();
+	});
+	return false;
+    });
+
+    jQuery('.json-form').off().attr('target', '').on('submit', function() {
+	if (undefined !== ckform && 'function' === typeof(ckform)) {
+	    if (!ckform()) {
+		return false;
+	    }
+	}
+    });
+
+    jQuery('.comment-icon').attr('style', 'vertical-align:middle;');
+});
+//-->
+</script>
+
+<div id="blog-post-bin" data-blog-relatedarticle="site"></div>
+
+    
+    <script type="text/javascript">
+<!--
+pix.bookmark_title = "Java - \u8b80\u7db2\u9801\u7bc4\u4f8b ";
+pix.bookmark_url = "http:\/\/robertvmp.pixnet.net\/blog\/post\/26585200";
+//-->
+</script>
+<div class="cf" id="share-tools">
+    <div class="grid-block">
+        <a class="btn" id="mixpanel-share-line" href="line://msg/text/Java - 讀網頁範例  http://robertvmp.pixnet.net/blog/post/26585200">LINE</a>
+    </div>
+    <div class="grid-block">
+        <a class="btn" id="mixpanel-share-fb" href="javascript:url=pix.bookmark_url;desc='';if(window.getSelection)desc=window.getSelection();if(document.getSelection)desc=document.getSelection();if(document.selection)desc=document.selection.createRange().text;void(open('http://m.facebook.com/sharer.php?u='+encodeURIComponent(url)+'&t='+encodeURIComponent(pix.bookmark_title)));">FB</a>
+    </div>
+    <div class="grid-block">
+        <a class="btn" id="mixpanel-share-mail" href="mailto:?subject=Java - 讀網頁範例  @ Thinking in Robert :: 痞客邦 PIXNET ::&body=轉寄「Java - 讀網頁範例  @ Thinking in Robert :: 痞客邦 PIXNET ::」與您分享：http://robertvmp.pixnet.net/blog/post/26585200" target="_blank">Mail</a>
+    </div>
+</div>
+
+    <div id="recommend-tools">
+</div>
+
+<script type="text/javascript">
+<!--
+(function($) {
+    $(function() {
+        pix.fixPixnetPlayerID();
+        jQuery('.article-hot').each(function() {
+            jQuery(this).append('<a class="__dailyhotclass" title="本日熱門" href="' + jQuery(this).attr('data-hot-link') + '" target="_blank"> <img title="熱門文章" alt="hot article today" src="http://s.pixfs.net/blog/images/choc/hot.gif"></a>');
+        });
+        
+        // resize Y2B video iframe
+        (function(){
+
+            var $fluidEl = $('#main'),
+                $allY2B = $fluidEl.find('iframe').filter('[src*="//www.youtube.com/embed/"]');
+
+            $allY2B.each(function() {
+
+                $(this).
+                    data('aspectRatio', this.height / this.width).
+                    data('originWidth', this.width).
+
+                    removeAttr('height').
+                    removeAttr('width');
+
+            });
+
+            $(window).resize(function() {
+
+                var newWidth = $fluidEl.width();
+
+                $.each($allY2B, function() {
+
+                    var $el = $(this),
+                        resizeWidth = Math.min(newWidth, $el.data('originWidth'));
+
+                    $el.
+                        width( resizeWidth ).
+                        height( resizeWidth * $el.data('aspectRatio') );
+
+                });
+
+            }).resize();
+
+        })();
+
+    });
+})(jQuery);
+//mobile lazyload
+jQuery(document).ready(function ($) {
+    $.ajax({
+        url: "//s.pixfs.net/js/jquery.lazyload/20140918/lazyload.min.js?v=ab5f4e34418eaf1fcecad312e2e10ebd",
+        dataType: "script",
+        cache: true,
+        success: function (data, textStatus) {
+            $(".article-content-inner img").lazyload({
+                effect: "fadeIn",
+                placeholder: "http://s.pixfs.net/js/jquery.lazyload/grey.gif"
+            });
+        }
+    });
+});
+</script>
+<script>
+var _piq = _piq || [];
+
+_piq.push(
+    ['setCustomVar', 'venue', 'pixnet'],
+    ['setCustomVar', 'author_id', pix.owner],
+        ['setCustomVar', 'article_category_id', "20"],
+        ['setCustomVar', 'nonce', pix.login_name],
+    ['setCustomVar', 'visitor_id', pix.visitor],
+    ['setCustomVar', 'visitor_openid', pix.openid],
+    ['trackPageView']
+);
+(function(d, t, u, f, j) {
+    f = d.getElementsByTagName(t)[0];
+    j = d.createElement(t);
+    j.async = 1;
+    j.src = u;
+    f.parentNode.insertBefore(j, f);
+})(document, 'script', '//s.pixanalytics.com/js/pi.min.js');
+
+(function ($) {
+    $(function () {
+        var _startTime = Math.floor((new Date()).getTime() / 1000),
+            _driveMode = ('none' === $(document.body).data('mobileMode')) ? 'desktop' : 'mobile',
+            _send = false,
+            unload;
+
+        unload = function () {
+            if (_send) {
+                return;
+            }
+
+            var _endTime = Math.floor((new Date()).getTime() / 1000),
+                _isIdleAdClosed = '';
+
+            switch ($.adIdlePopClosed) {
+                case 'hasClosed' :
+                    _isIdleAdClosed = 'close idle ad';
+                    break;
+                case 'neverClosed' :
+                    _isIdleAdClosed = 'not close idle ad';
+                    break;
+                default :
+
+            }
+            _piq.push(['trackEvent', 'article stay time', _isIdleAdClosed, _driveMode, (_endTime - _startTime)]);
+            _send = true;
+        };
+
+        $(window).on({
+            'beforeunload.idlePI': unload,
+            'unload.idlePI':       unload,
+            'pagehide.idlePI':     unload
+        });
+    });
+})(jQuery);
+</script>
+<script src="//front.pixfs.net/js/pixinsight.min.js?v=ab5f4e34418eaf1fcecad312e2e10ebd"></script>
+</div>
+<div id="search-panel">
+    <div id="search-box">
+        <div class="search-block">
+            <form method="GET" action="//m.pixnet.net/search/article">
+                <input class="search-input" name="q" placeholder="Search..." />
+                <input id="mixpanel-search-article" class="search-send" type="submit" value="送出" data-role="none" />
+            </form>
+        </div>
+    </div>
+    <h2 class="link-title"><a class="label" href="//m.pixnet.net" id="mixpanel-left-list-home">痞客邦</a></h2>
+    <h2  class="link-title"><a class="label" href="//m.pixnet.net/blog" id="mixpanel-left-list-blog">部落格首頁</a></h2>
+    <h2  class="link-title"><a class="label" href="//m.pixnet.net/album" id="mixpanel-left-list-album">相簿首頁</a></h2>
+    <!--選項-->
+    <div id="nav-opitions" class="menu-opitions-control">
+        <h2 class="panel-inner" id="mixpanel-left-list-column">痞專欄</h2>
+        <ul class="nav-opitions-inner">
+            <li>
+            <a class="nav-opitions-items" href="//m.pixnet.net/blog/topic/list/1" id="mixpanel-left-list-doodle">痞塗鴉</a>
+            </li>
+            <li>
+            <a class="nav-opitions-items" href="//m.pixnet.net/blog/topic/list/2" id="mixpanel-left-list-baby">痞寶貝</a>
+            </li>
+            <li>
+            <a class="nav-opitions-items" href="//m.pixnet.net/blog/topic/list/3" id="mixpanel-left-list-person">痞人物</a>
+            </li>
+            <li>
+            <a class="nav-opitions-items" href="//m.pixnet.net/blog/topic/list/4" id="mixpanel-left-list-play">痞愛玩</a>
+            </li>
+            <li>
+            <a class="nav-opitions-items" href="//m.pixnet.net/blog/topic/list/5" id="mixpanel-left-list-food">痞吃喝</a>
+            </li>
+            <li>
+            <a class="nav-opitions-items" href="//m.pixnet.net/blog/topic/list/6" id="mixpanel-left-list-talk">痞哈拉</a>
+            </li>
+            <li>
+            <a class="nav-opitions-items" href="//m.pixnet.net/blog/topic/list/7" id="mixpanel-left-list-life">痞生活</a>
+            </li>
+        </ul>
+        <h2 class="panel-inner" id="mixpanel-left-list-app">手機App</h2>
+        <ul class="nav-opitions-inner">
+            <li>
+            <a class="nav-opitions-items" href="//www.pixnet.net/mobile/app/headlines/redirect" id="mixpanel-left-list-7hlapp">7Headlines</a>
+            </li>
+            <li>
+            <a class="nav-opitions-items" href="//www.pixnet.net/mobile/app/shakeshakemrt/redirect" id="mixpanel-left-list-foodapp">美食搖一搖</a>
+            </li>
+            <li>
+            <a class="nav-opitions-items" href="//www.pixnet.net/mobile/app/shakeshakerails/redirect" id="mixpanel-left-list-rails">鐵路搖一搖</a>
+            </li>
+        </ul>
+    </div>
+    <a href="javascript:void(0);" class="close-btn" id="mixpanel-search-close"></a>
+</div>
+<div id="footer">
+		<div class="footer-switch">
+		<ul>
+			<li><a href="?m=on" id="mixpanel-switch-mobile">手機模式</a></li>
+			<li><a href="?m=off" id="mixpanel-switch-desk">完整模式</a></li>
+			<li style="opacity:0;"><a href="javascript:var testSelector = prompt('selector', '.header-ad') || '.header-ad'; alert(jQuery(testSelector).html());">test</a></li>
+		</ul>
+	</div>
+		<div class="footer-copyright">
+		<span>Copyright &copy; 2015 PIXNET Digital Media Corp.</span>
+	</div>
+</div>
+</div> <!-- .main-content -->
+<script type="text/javascript">
+<!--
+  if (typeof dataLayer === 'undefined') dataLayer = [];
+  dataLayer.push({
+    "user_name"     : "robertvmp",
+    "page_type"     : "blog",
+    "blog_name"     : "Thinking in Robert",
+    "blog_cat"      : "28 - 生活綜合",
+    "is_loggedin"   : "false",
+    "is_VIP"        : "false",
+    "article_title" : "Java - 讀網頁範例 ",
+    "article_id"    : "26585200",
+    "article_cat"   : "20 - 收藏嗜好"
+  });
+-->
+</script>
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-KGMWFG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script type="text/javascript">
+<!--
+  var _gaq = _gaq || [];
+  _gaq.push(
+    ['_setAccount', 'UA-408650-10'],
+    ['_setDetectTitle', false],
+    ['_setDomainName', 'none'],
+    ['_setAllowLinker', true],
+    ['_setCustomVar', 1, 'member', 'GUEST'],
+    ['_setCustomVar', 2, 'vip', 'nonVIP'],
+    ['_trackPageview', '/blog/'],
+
+    ['t2._setAccount', 'UA-408650-5'],
+    ['t2._setDomainName','none'],
+    ['t2._setAllowLinker', true],
+    ['t2._trackPageview', '/_user/robertvmp']
+
+      );
+
+jQuery(document).ready(function() {
+        var adInserted = 0;
+        jQuery('body').on('DOMNodeInserted', '#pixad1101', function(e) {
+        if (jQuery(e.target).attr("data-ad-client") == "ca-pub-8030263466908143" && !adInserted) {
+            _gaq.push(
+                ['temp._setAccount', 'UA-247026-4'],
+                ['temp._trackPageview']
+            );
+                        adInserted = true;
+        }
+    });
+});
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-KGMWFG');
+
+
+(function($, undefined) {
+$(function() {
+    var nowPath = document.location.pathname.split('/')[1];
+
+    var links = [
+        'mixpanel-tab-blog',
+        'mixpanel-tab-album',
+        'mixpanel-tab-guestbook',
+        'mixpanel-tab-profile',
+
+        'mixpanel-header-home',
+        'mixpanel-header-list',
+        'mixpanel-header-logo',
+
+        'mixpanel-share-fb',
+        'mixpanel-share-plurk',
+        'mixpanel-share-line',
+        'mixpanel-share-mail',
+        'mixpanel-share-google',
+
+        'mixpanel-stick-prev',
+        'mixpanel-stick-top',
+        'mixpanel-stick-next',
+
+        'mixpanel-switch-mobile',
+        'mixpanel-switch-desk',
+
+        'mixpanel-zoom-in',
+        'mixpanel-zoom-out',
+
+        'mixpanel-left-list-home',
+        'mixpanel-left-list-blog',
+        'mixpanel-left-list-album',
+        'mixpanel-left-list-doodle',
+        'mixpanel-left-list-baby',
+        'mixpanel-left-list-person',
+        'mixpanel-left-list-play',
+        'mixpanel-left-list-food',
+        'mixpanel-left-list-talk',
+        'mixpanel-left-list-life',
+        'mixpanel-left-list-7hlapp',
+        'mixpanel-left-list-foodapp',
+        'mixpanel-left-list-rails',
+        'mixpanel-left-list-column',
+        'mixpanel-left-list-app',
+
+        'mixpanel-menu-blog-title',
+        'mixpanel-menu-blog-category',
+        'mixpanel-menu-blog-new',
+        'mixpanel-menu-blog-hot',
+        'mixpanel-menu-photo-title',
+        'mixpanel-menu-album-list',
+        'mixpanel-menu-album-event',
+        'mixpanel-menu-album-me',
+        'mixpanel-menu-login',
+
+        'mixpanel-search-article',
+        'mixpanel-search-close',
+
+        'mixpanel-comment-send',
+        'mixpanel-scroll-related-article'
+    ];
+
+    for (var i = links.length - 1; i >= 0; i--) {
+        $( '#' + links[i] ).on('click', function() {
+            var _id = this.id;
+            _gaq.push(['_trackEvent', 'mobileClick', 'click-' + _id.split('-')[1], _id.replace('mixpanel-', '')]);
+        });
+    }
+
+    // mixpanel-header-list @ album|mobile
+    $('#changlist').on('click', function() {
+        _gaq.push(['_trackEvent', 'mobileClick', 'click-header', 'header-list']);
+    });
+
+    // detect category click
+    var currentPostSiteCategory = $('.article-header .header-title').data('siteCategory');
+    $('#main').on('click', '.pix-related-post a', function() {
+        var _cate = $(this).data('site_category');
+        _gaq.push(['_trackEvent', 'mobileClick', 'click-relatedPost', 'form-' + currentPostSiteCategory + '-to-' + _cate]);
+    });
+
+});
+})(jQuery);
+
+
+//-->
+</script>
+<script type="text/javascript">
+//<!--
+//-->
+</script>
+
+<script type="text/javascript">
+//<!--
+
+(function($, undefined) {
+$(function() {
+    var trackEvent = 'test6-article-tag';
+
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-408650-33', 'auto', {'name': 'globalBlogStatsTracker'});
+
+    ga('globalBlogStatsTracker.set', {
+        'page': '/robertvmp'
+            + '/26585200'
+            + '-' + "Java - 讀網頁範例 ",
+        'title': "Java - 讀網頁範例 "    });
+
+    var $doc = $(document);
+    $doc.find('.article-keyword').on('click', 'a', function() {
+        ga('globalBlogStatsTracker.send', 'event', trackEvent, '[部落格] 點文章 tag', '生活綜合');
+        ga('globalBlogStatsTracker.send', 'event', trackEvent, '[文章] 點文章 tag', '收藏嗜好');
+    });
+
+    $('.article-keyword > a').css({
+        paddingLeft: '.45em',
+        lineHeight: '2em !important',
+    });
+});
+})(jQuery);
+
+//-->
+</script>
+
+<script type="text/javascript" src="//s.pixanalytics.com/js/c.js?v=8"></script>
+<script type="text/javascript">
+<!--
+var _type = 'front_blog_mobile'; _uCount();
+_type = 'front_blog'; _uCount();
+_type = 'front_blog_nonvip_mobile'; _uCount();
+var location_href = document.location.toString();
+var _type = 'front_blog_byarticlecategory:20'; _uCount();
+var _type = 'front_blog_bysitecategory:28'; _uCount();
+if (location_href.indexOf('/post/') !== -1) {
+    _type = 'front_blog_post_mobile';  _uCount();
+    _type = 'front_blog_post';  _uCount();
+        _type = 'front_blog_post_nonvip_mobile';  _uCount();
+    _type = 'front_blog_post_nonvip';  _uCount();
+    }
+//-->
+</script>
+
+<!-- Modified: 1440612958 -->
+<!-- async script -->
+<script type="text/javascript">
+<!--
+jQuery.ajaxSetup({ cache: true });
+jQuery.ajaxSetup({ cache: false });
+//-->
+</script>
+
+<!-- load sync script -->
+
+<!-- execute sync addon -->
+<script type="text/javascript"></script>
+        <script type="text/javascript">
+        <!--
+            jQuery(function(){
+                jQuery.getScript('//falcon.pixanalytics.com/ad/js?fields[]=.header-ad,1101&fields[]=ad-300x50,786&fields[]=.article-ad,1083&fields[]=pixad1138,1138');
+            });
+        //-->
+        </script>
+        </body>
+</html>
